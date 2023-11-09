@@ -1,6 +1,8 @@
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
+import org.thymeleaf.templateresolver.WebApplicationTemplateResolver;
+import org.thymeleaf.web.servlet.JavaxServletWebApplication;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,8 +25,13 @@ public class TimeServlet extends HttpServlet {
     public void init() throws ServletException {
         engine = new TemplateEngine();
 
-        FileTemplateResolver resolver = new FileTemplateResolver();
-        resolver.setPrefix("D:/new/java/goit/javaDev/hw9-cookie/templates/");
+        JavaxServletWebApplication jswa = JavaxServletWebApplication.buildApplication(this.getServletContext());
+        WebApplicationTemplateResolver resolver = new WebApplicationTemplateResolver(jswa);
+
+        //FileTemplateResolver resolver = new FileTemplateResolver();
+        //resolver.setPrefix("D:/new/java/goit/javaDev/hw9-cookie/templates/");
+
+        resolver.setPrefix("/WEB-INF/templates/");
         resolver.setSuffix(".html");
         resolver.setTemplateMode("HTML5");
         resolver.setOrder(engine.getTemplateResolvers().size());
